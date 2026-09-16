@@ -1,0 +1,47 @@
+----------------------------------------------------
+           module 1- Linux & Shell Scripting
+----------------------------------------------------
+=>why we need to learn  Linux?
+linux is commonly used OS in real-time enviornment.
+
+=> what is linux?
+linux is an Operating System
+
+=> what is OS?
+OS is a software which  is used to communicate with the system/machine.
+it acts as a mediator between user and device.
+it provides an enviornment to run applications.
+
+=> Types of OS?
+windows OS, Mac OS, Android OS, Linux OS
+
+=>windows OS vs linux OS
+windows - it is single user based OS 
+linux = it is multi user based OS
+
+windows - it is based on GUI (graphical user interface) 
+linux = it is based on CLI (command line interface)
+
+windows - it is paid, less seecurity
+linux = it is free and open-source s/w, highly secure
+
+windows- it is developed by microsoft
+linux- it is developed by linux torvalds
+
+windows- it is recommended for personal use
+linux- it is for professional use
+
+=> Linux Distributions
+ex hyderabad biryani- receipe - hyd(paradise,bawarchi)
+bangalore-hyderabadi biryani 
+
+linuxOS --code --modified code --mycode1,mycode2,mycode3
+ubuntu,Debian,Suse linux,Cent OS...
+
+in Awscloud .most of these distributions are available as Amazon machine Image (AMI)
+1. RPM based
+  - RedHat, Cento OS, Amazon Linux 2, Amazon Linux 2023
+2. Debian based
+  - Suse, Ubuntu
+
+In real-time, we will prefer to work either with  Amazon Linux or Ubuntu OS
