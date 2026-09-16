@@ -45,3 +45,26 @@ in Awscloud .most of these distributions are available as Amazon machine Image (
   - Suse, Ubuntu
 
 In real-time, we will prefer to work either with  Amazon Linux or Ubuntu OS
+
+=> how we can work with linux OS?
+AWS cloud --- EC2 --- launch a virtual machinne /EC2Instance
+
+=>how to connect to a VM?
+within the cloud(EC2 instance connect ,sessionn Manager..)
+mobaXTerm ,putty, GitBash..
+
+Note: moboxterm is prefered throughout the modules
+
+=> launching a EC2 VM
+``````````````````````````````````````````
+linux commands = part1 (basic commmands)
+```````````````````````````````````````````````````
+clear or ctrl +l
+cal 
+cal 2026
+cal -3
+cal <1-12> <year>
+
+in linux we have 2 types of userss:
+1.ec2-user (default)
+2.root
