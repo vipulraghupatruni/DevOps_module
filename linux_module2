@@ -1,0 +1,15 @@
+detail about particular command 
+man  or --help
+
+a name to the server = hostname
+hostname -i (private ip)
+
+set-hostname
+
+i want to see hidden files
+ls -la  (who,when)
+
+mv (renaming dir/files)
+mv vip1.py demo/         {demo=dir, vip1.py=files}
+
+
