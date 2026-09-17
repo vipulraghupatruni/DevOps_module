@@ -68,3 +68,14 @@ cal <1-12> <year>
 in linux we have 2 types of userss:
 1.ec2-user (default)
 2.root
+
+ec2-user vs root
+ec2-user doesn't have all permissions to execute specific commmands (installation of a softwares)
+root user will have all kinds of privileges
+
+whoami
+sudo su or sudo -i
+exit
+
+in linux OS, everything is represented as "files"
+
