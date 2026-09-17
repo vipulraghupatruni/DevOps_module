@@ -77,5 +77,43 @@ whoami
 sudo su or sudo -i
 exit
 
+to know in which path u r currently there- pwd (present working directory)
+
 in linux OS, everything is represented as "files"
+.txt, .py, .java, .net...
+
+how to create files in linux OS?
+1.touch
+2.cat
+3.vi or vim
+
+how to see the list of files available?
+ls or ls -l or ll
+
+create 5  files but number should start from 95 and end at 100.
+.py
+netflix
+
+touch netflix{95..100}.py
+
+delete a file --- rm
+
+how to work with vi command?
+1.vi<fileName>
+2.goto the "insert" mode --press "i"
+3.write the content
+4.press "esc"
+5.to save and quit ---:wq
+
+in linux we create directories
+mkdir <directoryName>
+
+in the beginning of a line, if you see -, then its a file
+in the beginning of a line, if you see d, then its a directory
+
+
+
+
+
+
 
