@@ -137,3 +137,61 @@ $ head +3 <FileName>
        #printlast 25 lines of data
         tail -n 25 <filename>
 
+------------------------------------------------------------------------------------------------------------------------
+SED Command
+-------------------------------------------------------------------------------------------------------------------------
+=> SED stands for stream editor
+=> SED is used to process the data (substitute, delete, print, insert)
+=> Using SED command we can perform operations on the file without opening the file.
+=> We will use below options with SED command
+                     s - substitute
+                     d - delete
+                     p - print
+                     i-Lasert
+
+# replace linux keyword with unix 
+sed 's/linux/unix/g' <FileName>
+
+# substitute linux with unix and save changes in the file 
+sed -i 's/linux/unix/g' <FileName>
+
+# delete first line of the file
+sed -i 'ld' <FileName>
+
+# delete 4th line of the file
+sed -i '4d' <FileName>t
+
+# delete last line of the file
+sed -i '$d' <FileName>
+
+# delete from 3rd line to last line
+sed -i '3, $d' <FileName>
+
+# delete from 10th line to 15th line
+sed -i '10, 15d' <FileName>
+
+# Add line at end of file
+sed -i'$a\my name is vipul'<filename>
+
+# Add line at end of file
+sed -i'2i\I'm a DevOps Trainer'<filename>
+
+#print 10th line only
+sed -n '10p'<filename>
+
+#print data from 2nd line to 5th line
+sed -n'2,5p'<filename>
+
+=========================================================================================================
+File Permissions in Linux
+=========================================================================================================
+
+
+
+
+
+
+
+
+
+
