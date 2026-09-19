@@ -108,4 +108,32 @@ unnzip a zipped file
 unnzip archive_name.zip
 
 unnzip to a specific directory
-unzip archive_name.zip -d/path/to/destination/
+unzip archive_name.zip -d /path/to/destination/
+
+=> tac: To print file data from bottom to top 
+         tac fl.txt
+
+=> head: print first 10 lines of the file 
+          head <FileName>
+
+    # print first 10 lines only 
+      head -n 10 <FileName>
+
+    # print first 15 lines only 
+      head -n 25 <FileName>
+
+To see the content from the specific number of line from the top
+$ head -n <LineNumber><FileName>
+$ head +n <LineNumber><FileName>
+
+To see the content from the specific number of line from the bottom
+$ tail -n <LineNumber> <FileName>
+
+To see the content available in a specific line from top
+$ head +3 <FileName>
+
+=>tail : print last 10 lines of the file
+          tail <filename>
+       #printlast 25 lines of data
+        tail -n 25 <filename>
+
