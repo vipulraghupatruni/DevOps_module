@@ -27,6 +27,38 @@ open winscp in laaptop  ---> in this login window, file protocol:SFTP ---> click
 
 In the top bar(right side) --->new tab ...> file protocol:SFTP ---> hostname:publiic IP of VM, port no 22,username:ec2-user 
 --->click on advanced ---> SSH(left pane) --->Authentication(left pane) 
----> under the "private key file" click on ...(3dots) and select the ppk file ---> ok ---> login --->accept 
+---> under the "private key file" click on ...(3dots) and select the ppk file---> ok ---> login --->accept 
+
+on the left side you will see windows and on the right side you  will see VM connected tab with path as /home/ec2-user.
+In the left side pane, select any path (EX: downloads folder) and  select a file and drag and drop that file to the right 
+side window i.e your VM  tab.
+
+goto Moba and execute ls ---> whatever file you have  dragged and dropped the same file you will see here. This is the easiest 
+way to copy the files from windows to Linux
 
 
+---------------------------------------------------------------------------------------------------------------------------------
+SCP command - Transfer files from linux VM to another Linux vM
+---------------------------------------------------------------------------------------------------------------------------------
+SCP - secure copy  protocol, is a command line tool used for securely transferring files between local and a remote host or between 
+2 remote hosts using  SSH for Encryption and authentication
+
+launch 2 VMs of Amazon Linux 2 AMI, t2.Micro. use same keypair for both VMs, connect to both VMs
+
+VM1 tab  of moba ---> create  5 files ---> to copy the files we will use SCP, for that first we need to create .pem file in VM1 --->
+vi <PEMFileNameUsedToLaunchVM1>.pem --->paste the content from pem file which was used to launch  VM1 ---> esc --->:wq 
+--->sudo chmod 400 <PEMFileNameUsedToLaunchVM1>.pem --->lets establish a connection ---> scp -i <PEMFileName>.pem
+<FileNameYouWantToCopy> ec2-user@<PrivateIPofVM2>:/home/ec2-user/ ---> [here ec2-user is the username of VM2] ---> yes
+
+To verify, connect to vM2 and do 'ls' ---> you will see the  file
+
+Note: Instead of file, you can  give directory name also (Ex:Kastro/). command to copy directory is as below;
+scp -r -i <PEMFileName>.pem <DirectoryNameYouWantToCopy>/* ec2-user@<PrivateIPofVM2>:/home/ec2-user/
+
+
+-----------------------------------------------------------------------------------------------------------------------------
+SetUp Nginx WebServer on Linux
+-----------------------------------------------------------------------------------------------------------------------------
+Launch  RedHat linux EC2 instance
+connect to the VM and execute below commands;
+sudo amazon-linux-extras install nginx1
