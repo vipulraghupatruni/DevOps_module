@@ -12,4 +12,21 @@ ls -la  (who,when)
 mv (renaming dir/files)
 mv vip1.py demo/         {demo=dir, vip1.py=files}
 
+----------------------------------------------------------------------------------------------------------------------
+WinSCP Setup - transferring files from windows to Linux
+----------------------------------------------------------------------------------------------------------------------
+here we will use .ppk file. launch an instance with .ppk file
+WinSCP is a tool that is used to transfer file from windows to linux
+
+download winscp to laptop : https://winscp.net/eng/download.php
+
+in VM makes sure you are in /home/ec2-user  ---> create one empty file in this path
+
+open winscp in laaptop  ---> in this login window, file protocol:SFTP ---> click on close 
+---> you will see 2windows. in both windows you will see the download folder (by default)
+
+In the top bar(right side) --->new tab ...> file protocol:SFTP ---> hostname:publiic IP of VM, port no 22,username:ec2-user 
+--->click on advanced ---> SSH(left pane) --->Authentication(left pane) 
+---> under the "private key file" click on ...(3dots) and select the ppk file ---> ok ---> login --->accept 
+
 
