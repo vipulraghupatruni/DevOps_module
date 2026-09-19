@@ -62,3 +62,50 @@ SetUp Nginx WebServer on Linux
 Launch  RedHat linux EC2 instance
 connect to the VM and execute below commands;
 sudo amazon-linux-extras install nginx1
+cd /usr/share/nginx/html/
+ls ---> you will see default 'index.html' file
+
+Nginx configurations will be available in ---> cat /etc/nginx/nginx.conf
+
+sudo systemctl start nginx
+open port 80 and access the app
+
+Note: you can keep custom content inside the index.html file
+
+to remove nginx:yum remove nginx -y
+
+--------------------------------------------------------------------------------------------------
+SetUp Apache WebServer on Linux
+--------------------------------------------------------------------------------------------------
+launch Amazon linux 2,t2.micro,Ec2 instance
+connect to the VM and execute below commands;
+sudo yum install httpd -y
+cat /etc/httpd/conf/httpd.conf #all apache configurations will be here (Changing port,listen 80or 8080). scroll down to "listen 80".if you want 
+you can change the port so that httpd will work on custom port as well .but don't do that
+cd /var/www/html/
+vi index.html
+<Write some content>
+
+systemctl status httpd
+sudo systemctl start httpd
+open port 80 and access the app
+
+===> to compress a specific file
+gzip <filename> ---> ls ---> you will see the zip file, butoriginal file is  lost. observe the size of zip file and original file. zip file size will show
+less size that the original file
+
+if you dont want to lose the original file while compressing;
+gzip -c <filenmae>><filename>.gz
+
+zip multiple files
+zip archive name.zip with the desired name for your zip file.
+replace archive _name.zip with desired name for your zip file.
+
+zip an entire directory (including subdirectories)
+zip -r archive _name.zip directory_name/
+
+unnzip a zipped file
+unnzip archive_name.zip
+
+unnzip to a specific directory
+unzip archive_name.zip -d/path/to/destination/
