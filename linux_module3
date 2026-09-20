@@ -1,0 +1,76 @@
+=========================================
+what is systemctl in linux?
+===========================================
+=>systemctl is used to manage services in linux machines.
+=>using systemctl we can perform below operations
+        a) start a service
+        b) stop service
+        c) re-start service
+
+#stop httpd server
+sudo systemctl stop httpd
+#start httpd server
+sudo systemctl start httpd
+#reload service
+sudo systemctl reload httpd
+
+===============================================
+how to change hostname in vm?
+===============================================
+#set hostname
+$sudo hostname <new-name>
+
+#re-start session
+$exit
+note:connect back to vm then we can see configured hostname
+
+=>to see the list of all services installed
+systemctl list-units --type=service--all
+
+=>to see about a particular service (ex:nginx)
+systemctl list-units --type=service--all |grep nginx
+
+=>to see the disc file system
+df -h {-h represents human redable}
+=>to see the size of a directory
+ls -ltr
+=>to see memory details
+free -h
+df -h
+
+=>to see for how long the VM  is running - uptime
+
+=>to see whether a s/w installed or not
+rpm -qa |grep <softwareName>
+yum list available |grep <softwareName>
+ex:rpm -qa |grep java          yum list avilable |grep java
+
+=>to see list of packages/softwares insalled
+dnf list installed
+yum list available
+=>how to find the number of .txtfiles available?
+$locate -c *.txt        $locate -c *.py              $locate -c *.java
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
