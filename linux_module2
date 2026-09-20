@@ -147,7 +147,7 @@ SED Command
                      s - substitute
                      d - delete
                      p - print
-                     i-Lasert
+                     i - insert
 
 # replace linux keyword with unix 
 sed 's/linux/unix/g' <FileName>
@@ -182,16 +182,59 @@ sed -n '10p'<filename>
 #print data from 2nd line to 5th line
 sed -n'2,5p'<filename>
 
+Add line at beginning of file
+sed -i '1s/^/This is Vipul\n/' vipul.txt 
+sed -i '6s/^/This is Vipul\n/' vipul.txt 
+
+=========================================================================================
+Networking commands
+=========================================================================================
+ping: to check connectivity 
+      ping www.google.com
+      ping 192.168.1.34
+
+wget : it is used to download files from internet
+        wget <url>
+
+curl : it is used to send http request to the url
+       curl <url>
+       curl https://jsonplaceholder.typicode.com/posts
+
+ifconfig : to get IP address of our machine
+
+
 =========================================================================================================
 File Permissions in Linux
 =========================================================================================================
 
+==================================
+*package managers in linux
+==================================
+=> package means a soft ex :git,maven,java  etc
+=> package managers are used to manage software packages (s/w) in linux machine.
+=> package managers are specific to linux distribution
+     Amazon Linux ===> yum
+     Ubuntu Linux ===> apt
 
+yum - yellowdog updater, modifier - linux OS
+apt - advanced packaging tool - ubuntu OS
+dnf - dandified yum
+dpkg - debian package management system
+rpm - redhat package manager -redhat
 
+#check git client  installed or not
+git --version
+#install git client s/w
+sudo yum  install git -y
+#check git installation path
+whereis git
 
-
-
-
+#check maven installed or not
+mvn --version
+#install maven s/w
+sudo yum  install maven -y
+#check maven installation path
+whereis maven
 
 
 
