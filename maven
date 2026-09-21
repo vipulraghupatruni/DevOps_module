@@ -1,0 +1,43 @@
+======================================
+MAVEN
+=====================================
+in real time , maven is mostly used by developers.
+maven is also used by Devops engineer
+what is maven?
+maven is a build tool which is used to create the initial project folder structure to develop/write the source code of the application.
+
+what are the build tools available in the market?
+based on the programming languages, we have different build tools:
+       java            -  Maven
+       python          -  Pycharm
+       ruby            -  Rakes
+       .net            -  MS Build
+
+in real time, most (90%) of the projects will be developed using java programming language (JPL) 
+since the projets are developed using jpl, it is essential to learn maven for devops 
+project --- dev  --- write code ---filename: netflix.java --- github --- devops -- take code and deploy inti the servers. but, it is not
+possible to directly deploy the code into the servers.
+
+maven is used to create the project folder structure.
+      -src
+      -pom.xml
+
+how maven is used by devops engineer?
+there are 4 ways
+1.using maven we can create the initial project folder structure
+2.using maven we can download the "dependencies" required for project
+2.1what is dependency? repository or library which is stored in a central server
+
+All these 100 class files will be packged as a single file
+when we package the .class files , the file extensions will change based on the types of application.
+
+how many types of application?
+3 types
+  -standalone application           - package              - .jar (java Archive)
+  -web application                  - package              - .war (web application)
+  -enterprise application            -package              - .ear (enterprise application)
+
+
+
+
+what is depende
