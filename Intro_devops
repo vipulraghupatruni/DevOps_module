@@ -1,0 +1,46 @@
+Intro to DevOps
+S3,EC2, VPC, RDS, IAM, ROUTE 53, ELB, ASG
+
+################################
+3 tier Architecture
+################################
+* Web Server
+    ==> It is the front-end of an App
+    ==> Also known as Presentation layer
+    ==> UI/UX developers works for this
+    ==> html, css, javascript are commonly used
+
+* App Server
+    ==> The purpose of using app server is to use the application
+    ==> Also known as Logic layer
+    ==> Source code will be stored in this layer
+    ==> Back-end developers works for this
+    ==> Java, Python, C++ are commonly used
+
+* DB Server
+    ==> The purpose of using DB server is to store and retrieve the data from DB
+    ==> Also known as DB layer
+    ==> DB Admins works for this
+    ==> SQL, Oracle, Postgress SQL are commonly used
+
+AWS 3 Tier Project
+screenshot 1 App Home pAge
+src 2        after entering the data in the app, that screenshot is also required
+src 3        Access the database and the data inside it.the screenshot of data is required
+
+
+
+
+
+
+
+========================================
+Environment
+========================================
+* In real-time, we will have multiple environments to run an application.
+* Types of enviornments:
+   > DEv       Developers will work
+   > SIT       System Integration Testing     testing team will work
+   > UAT       User Acceptance Testing        client team use the apporoval
+   > Pilot     Pre-Production env             Access specific user             (Beta version of the code)
+   > Prod      Production environment
