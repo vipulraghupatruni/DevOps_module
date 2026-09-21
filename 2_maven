@@ -1,0 +1,84 @@
+======================================
+MAVEN
+=====================================
+in real time , maven is mostly used by developers.
+maven is also used by Devops engineer
+what is maven?
+maven is a build tool which is used to create the initial project folder structure to develop/write the source code of the application.
+
+what are the build tools available in the market?
+based on the programming languages, we have different build tools:
+       java            -  Maven
+       python          -  Pycharm
+       ruby            -  Rakes
+       .net            -  MS Build
+
+in real time, most (90%) of the projects will be developed using java programming language (JPL) 
+since the projets are developed using jpl, it is essential to learn maven for devops 
+project --- dev  --- write code ---filename: netflix.java --- github --- devops -- take code and deploy inti the servers. but, it is not
+possible to directly deploy the code into the servers.
+
+maven is used to create the project folder structure.
+      -src
+      -pom.xml
+
+how maven is used by devops engineer?
+there are 4 ways
+1.using maven we can create the initial project folder structure
+2.using maven we can download the "dependencies" required for project
+2.1what is dependency? repository or library which is stored in a central server
+
+All these 100 class files will be packged as a single file
+when we package the .class files , the file extensions will change based on the types of application.
+
+how many types of application?
+3 types
+  -standalone application           - package              - .jar (java Archive)
+  -web application                  - package              - .war (web application)
+  -enterprise application            -package              - .ear (enterprise application)
+
+the packages files will deployed into the servers
+
+==================================
+Maven Intro
+==================================
+maven is a build tool or java build tool
+which contain JVM- java virtual machinne
+
+###########################
+Maven Demo
+###########################
+launch EC2 instance (Amazon linux 2 AMI ,t2 micro)
+       innstall maven                                 sudo yum install maven -y
+       write the .java code                           
+       try to execute the java code - failure
+       compile the java code
+       execute the code and check for output
+
+======================================================
+how to create a standalonne applicattion using maven:
+======================================================
+mvn archetype:generate  -DgroupId=in.<CompsnyrName> -DartifactId=<ProjectName> -
+DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveModel=false
+
+mvn archetype:generate -DgroupId=in.StarAgile -DartifactId=Netflix -DarchetypeGroupId=org.apache.maven.archetypes -DarchetypeArtifactId=maven-archetype-quickstart -DarchetypeVersion=1.4 -DinteractiveMode=false
+
+
+by executing  the above code, we r going to create a intial project folder structure
+
+------------------------------------------
+maven goals/maven lifecycle 
+------------------------------------------
+clean-            it will delete the target folder                   mvn clean
+test              it will test the source code                       mvn test
+compile           it will compile the source code                    mvn compile
+package           it will package the project code                   mvn package
+
+note - all maven starts with mvn
+       mvn clean packages
+       all maven goals should be executed in the path where pom.xml file available
+       all artifacts, we can store in nexus/jfrog/s3 buckets
+
+
+the war which got genertaed will deployed into the server
+Tomcat
