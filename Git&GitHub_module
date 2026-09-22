@@ -1,0 +1,25 @@
+================================================
+               GIT & GITHUB
+================================================
+git = global information tracker
+
+What is VCS?
+its a vcs version control system or source code management
+
+what it does? it used to track the files 
+types of vcs -       local, central, distributed
+
+why git?
+detailed tracking , open source
+integrated with jenkins, k8s, aws code pipeline, etc
+github,gitlab,aws code commmit are built onn top of git
+
+git vs github | ways of working with git
+1.locally - pc install git and work with cli
+2.in cloud(AWS) EC2 instance install git and work with cli
+3.using code editors (IDEs) VScode editor,eclipse,intellij
+4.repository management platform github,AWS Code Commit, gitlab, bitbucket
+5.git client source tree, gitkraken,github desktop
+
+install PC,ec2vm, config levels, configuration user credentialls
+stages in git 3 working directory, staging area,repository area
