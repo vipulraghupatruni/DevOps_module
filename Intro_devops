@@ -29,11 +29,6 @@ src 2        after entering the data in the app, that screenshot is also require
 src 3        Access the database and the data inside it.the screenshot of data is required
 
 
-
-
-
-
-
 ========================================
 Environment
 ========================================
@@ -44,3 +39,24 @@ Environment
    > UAT       User Acceptance Testing        client team use the apporoval
    > Pilot     Pre-Production env             Access specific user             (Beta version of the code)
    > Prod      Production environment
+
+=====================================================
+             Deployment
+=====================================================
+AWS 3 Tier Project ---s3,ec2,vpc,route 53,rds
+Jenkins
+Docker
+Ansible
+Terraform
+Kubernetes
+Prometheus & Grafana
+
+
+what is deployment?
+   App --end users to access the app ---deployment --- 1.physical servers 2.virtual servers
+
+types of deployments?   1.manual deployment         2.automated deployment
+
+   1.manual deployment - code(java) --build the code (compile & Package) - maven --jar/war generation --deploy into server
+        to deploy the code into servers, we need webservers
+            webservers- apache,nginx,tomcat,jboss
