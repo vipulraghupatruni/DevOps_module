@@ -1,0 +1,155 @@
+-----------------
+   JENKINS
+-----------------
+=>CI & CD process
+        github --->cloned ---> packaged the code (war) ---> mnually deployed into the server ---> Manual
+   CI & CD ia an automation process to build and deploy the application in the webserver.
+CI (continous Integration)
+       CI = continous build + continous test
+       version1 ---> deployed
+       version2 ---> makes the  changes to the code ---> test the code --->build the code ---> deployed
+       version3 ---> makes the  changes to the code ---> test the code --->build the code ---> deployed
+
+
+CD (continous delivery)
+    If you are deploying the code manually, then it is known as continous delivery ex:tomcat
+
+CD (continous deployment)
+    if you are deploying the code in an automted way,then it is known as continuos deployment
+In order to automate the build and deployment process we will a CI&CD tool known as JENKINS
+EX: Circle CI, Argo CD, GitHub Actions, AWS code pipeline
+
+     GitHub ---> AWS code commit
+     Maven ---> AWS code build
+     Jenkins ---> AWS code pipeline
+      
+    Before Jenkins ---> continuos delivery
+    After jenkins ---> continous deployment
+
+===> Introduction to Jenkins
+jenkins is a CI & CD tool
+by using jenkins we can automate the build and deployment process
+Jenkins is developed using Java Programming Language
+if you want to work with jenkins, we need to install java (17,21)
+jenkins will run on default port  numberwhich  is 8080
+
+VM ---Tomacat(8080), Jenkins (8080)
+VM 1 ---Tomacat(8080)
+VM 2 ---Jenkins (8080)
+
+official documentation of jenkins: https://www.jenkins.io/
+===> install & setup jenkins
+ launch 1 amazon linux 2 instance,t2.micro,30GB
+
+
+                    steps :
+                                   sudo su
+                                   sudo yum update  -y
+
+steps :install git java 17 and maven in server
+yum install git java-17-amazon-corretto maven -y
+
+step 3: jenkins installation       (official documtation https://www.jenkins.io/doc/book/installing/linux/)
+  sudo wget -O /etc/yum.repos.d/jenkins.repo https://jenkins.io
+sudo rpm --import https://jenkins.io
+ sudo yum upgrade
+yum install jenkins -y
+    sudo systemctl enable jenkins
+    sudo systemctl start jenkins
+  sudo rm -f /etc/yum.repos.d/jenkins.repo
+    sudo wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/rpm-stable/jenkins.repo
+    sudo rpm --import https://pkg.jenkins.io/rpm-stable/jenkins.io-2026.key
+    sudo yum clean all
+    sudo yum install jenkins -y
+    sudo systemctl status jenkins
+
+note: chkconfig jenkins on
+the above commanad will make jenkins service automatically restart itself whenever a server is stopped and restarted
+    -------------------------------------------------
+             setup jenkins dashboard
+    -------------------------------------------------
+ setup crdentials ---- install suggested plugins --- create adminuser ---access the jenkins dashboard
+ default path of jenkins: /var/lib/jenkins/secrets/initialAdminPassword     --paste the password
+ click on suggested plugin --- save&continue
+
+ ===>exploring jenkins console
+ in jenkins, we will crete jobs(tasks) which are known as jenkins jobs/items
+
+ ==>types of jobs
+ jenkins basically supports 2 types of jobs;
+  1.freestyle poject -- GUI
+  2.pipeline project -- code - Groovy scripts
+
+==>JOB 1:create a basic freestyle project
+in freestyle project,we have to configure 6 steps.
+based on type of job,we will work with required steps
+
+===========================================================================
+Freestyle Pipeline
+
+JOB 1 Freestyle
+Create a freestyle project and show the options
+
+JOB 2 Freestyle
+In 2nd job, under 'Build Steps' option select Exect Shell' write the below command to create a file and write the content inside the file
+echo "Welcome to Jenkins classes" > /tmp/vipul.txt
+After building the job ---> Check console output and look for path ----> cd /tmp ---> You will see "vipul.txt" file ---> cat vipul.txt ---> You will see the content inside the file which we have kept in jenkins console
+
+JOB 3 Freestyle
+Lets say i have a file in my VM and i want Jenkins to run that file.
+Currently you are in /tmp path (If you are not there, execute "ed /tmp" command) -> Create a shell
+file --> vi vipul.sh --> Write the below content -->
+echo "Welcome to Jenkins Class"
+echo "Jenkins is a CI & CD Tool"> esc --> :wq ---> Run the shell file ---> You will see the output.
+
+Now the shell file is available in the server. I want jenkins to execute this file.
+create 3rd job and under 'build steps' option select 'execute shell' write the below  command to execute the file created now:
+bash /tmp/<ShellFileName>.sh
+build the job
+goto console output to see the content got executed
+
+job 4 freestyle (assignments)
+create a shell  file (inside the VM) to install httpd and make jenkins to build that shell file
+
+job 5 freestyle (jenkins parameters)
+this project  is paramterized
+parameters are used to pass variables in key-value pairs during the build
+ (a) string parameter
+    create job --->general ---> 'check'this project is parameterized --->add parameters --->string parameter -->name:Nmae,Default value:vipul
+    --->add parameters --->string parameter -->name:Role,Default value:DevOps -->scroll down to 'build steps' --> select 'execute shell' -->echo "my name is"$Nmae and" I'm a"$Role -->apply
+    -->save-->now you will see the default values -->click on 'build'-->Goto console output and verify
+
+    build the above job one more with different Name and Role as required by the students. goto console output and verify 
+
+    this is how we can pass variables inside the build.
+
+    (b)choice prameter - i want the job to take name fro user and select the gender from user using dropdown option
+    create job -->general -->'check'this project is parametrized -->add parameters -->string parameter -->Name:Name,Default value:vipul -->add parameters -->choice parametrs -->
+    Name:gender, choices:write the below in line by line;
+    Male
+    Female
+    others -->scroll down to 'build steps' -->select 'execute shell' -->echo "my name is"$Nmae and "I'm a"$gender -->apply -->save-->now u wll  see"build with parametrs"
+    option instead of build now -->click on 'build with  parametrs' -->u will see the default values -->select the gender  from drop down  -->click on 'build' -->goto console output and verify
+
+    here we have confirmed local variables (passing variables inside the build) to configure global variables we will  use 'system' option in 'manage jenkins' option
+
+JOB 6 Freestyle (Assignment)
+
+Assignment:
+Create the job with three parameters and the outpu should get stored in custom directory inside a custom file
+Parameter 1: User has to give name
+Parameter 2: User has to select Gender
+Parameter 3: User has to select their role in company (Add any 3 roles for ex; devops engineer, testing engineer, developer)
+The output should be as "Hello, My Name is <Username>, and Im <Gender>. I'm working as a <Role>
+
+JOB 7 Freestyle (To build the jobs automatically)
+Build Triggers Build Periodically
+Use 'Build Periodically' option using cron expression. To build the job at required time. Create a job with 'Build Periodically' option. Wait for the job to get executed automatically crontab.cronhub.io
+
+Job 8 Freestyle (Integrating GitHub with Jenkins)
+Create a job ---> SCM (left pane) ---> 'Check' Git ---> Repo URL: <Provide Any Repo URL>, Branch: <Branch Name> ---> Apply ---> Save ---> Build the job ---> Go to the Console Output to see whether Jenkins has downloaded the code or not
+
+Job 9 Freestyle (Integrating Maven with Jenkins Building the Job using 'Execute Shell' option) 
+Open the previously created job in Job 8 ---> Configure ---> Lets say i want to build the artifact ---> Build Steps (left pane) ---> Select 'Execute shell' ---> mvn clean package ---> Apply ---> Save ---> Build the job ---> Go to the Console Output to see whether Jenkins has generated the war file or not
+
+    
