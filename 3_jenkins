@@ -100,7 +100,7 @@ Lets say i have a file in my VM and i want Jenkins to run that file.
 Currently you are in /tmp path (If you are not there, execute "ed /tmp" command) -> Create a shell
 file --> vi vipul.sh --> Write the below content -->
 echo "Welcome to Jenkins Class"
-echo "Jenkins is a CI & CD Tool"> esc --> :wq ---> Run the shell file ---> You will see the output.
+echo "Jenkins is a CI & CD Tool"> esc --> :wq ---> Run the shell file ---> You will see the output.                 interview question how will runn shell without exectable peermission command  A/ using (sh filename.sh) command
 
 Now the shell file is available in the server. I want jenkins to execute this file.
 create 3rd job and under 'build steps' option select 'execute shell' write the below  command to execute the file created now:
@@ -146,10 +146,33 @@ JOB 7 Freestyle (To build the jobs automatically)
 Build Triggers Build Periodically
 Use 'Build Periodically' option using cron expression. To build the job at required time. Create a job with 'Build Periodically' option. Wait for the job to get executed automatically crontab.cronhub.io
 
-Job 8 Freestyle (Integrating GitHub with Jenkins)
+########Job 8 Freestyle (Integrating GitHub with Jenkins)
 Create a job ---> SCM (left pane) ---> 'Check' Git ---> Repo URL: <Provide Any Repo URL>, Branch: <Branch Name> ---> Apply ---> Save ---> Build the job ---> Go to the Console Output to see whether Jenkins has downloaded the code or not
 
 Job 9 Freestyle (Integrating Maven with Jenkins Building the Job using 'Execute Shell' option) 
 Open the previously created job in Job 8 ---> Configure ---> Lets say i want to build the artifact ---> Build Steps (left pane) ---> Select 'Execute shell' ---> mvn clean package ---> Apply ---> Save ---> Build the job ---> Go to the Console Output to see whether Jenkins has generated the war file or not
 
     
+**************
+job 10 - freestyle (integration maven with jenkins - building the job using 'invoke top level maven targets' option)
+create a job --> SCM (left pane) -->'check' git --->repo URL:<provide any repo url>,branch:<branch name> -->lets say i want to  build the artifact --->build steps(left pane) --->select 'invoke top level maven targets'-->clean package -->apply -->save -->build the job -->go to the console output to see whether jenkins has generated the war file or not
+
+job 11- poll SCM
+build periodically ---happens at specific time
+pll scm -- will wait for 1 minute and then triggers the job
+github web hooks -- immediately the job should get triggered wheneverthere is a change in repo
+
+job 12 - email notification
+if build fails, we should get notifications
+                     manage jenkins -> system ->Email notification
+
+SMTP server
+default user e-mail suffix =@jenkinstest.com
+smtp.gmail.com
+
+Advance -->use smtp authentication username
+for password go to browser -->gmail profile --.manage your google account -->security -->turn ON
+2-steps authentication --> on top -->search for app password -->app name-->jenkins -->create -->copy code -->miqx ynqp dprcqgpt -->done
+copy the code and paste in password section
+
+use SSL
