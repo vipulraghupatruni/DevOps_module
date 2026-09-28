@@ -176,3 +176,18 @@ for password go to browser -->gmail profile --.manage your google account -->sec
 copy the code and paste in password section
 
 use SSL
+SMTP port =465
+test configuration by sending test e-mail -->abc@gmail.com -->test configuration
+edit the job -->configuration -->post-build actions -->recipients = abc@gmail.com and fail the job to get email
+
+----------------------------------------------------------------------------------------
+recovering a deleted job 
+----------------------------------------------------------------------------------------
+Install "Job configuration history" Jenkins dashboard→ You will see a new option in leftpane as "Job configuration history Create a
+simple freestyle job Build the job Delete the job Click on "Job configuration history" (left pane) Show deleted jobs only (left pane) > Click on >> arrows under 'Restore project option to recover the job > Goto Jenkins console and see the job availability
+Note Whatever jobs that were created after installing the plugin, only those jobs can be recovered, if
+
+deleted
+Note For the jobs which were created before installing the plugin and if they are deleted, those deleted
+
+jobs will still be available in the VM i.e /var/lib/Jenkins/workspace path
