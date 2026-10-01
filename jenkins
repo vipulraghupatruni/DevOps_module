@@ -1,0 +1,64 @@
+install jenkins
+======================
+
+dnf install java-21-amazon-corretto-headless maven -y                       (java/maven)
+
+
+# 1. Delete the broken file containing the HTML text
+sudo rm -f /etc/yum.repos.d/jenkins.repo
+
+# 2. Download the actual repository configuration file
+sudo wget -O /etc/yum.repos.d/jenkins.repo \
+  https://jenkins.io
+
+# 3. Import the official verification key
+sudo rpm --import https://jenkins.io
+
+sudo systemctl enable --now jenkins
+sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+
+*******************************************************************
+job 8- jenkins + maven + Github +tomcat Integration - 1
+automated way
+
+steps
+
+sudo wget https://dlcdn.apache.org/tomcat/tomcat-11/v11.0.26/bin/apache-tomcat-11.0.26.tar.gz
+tar -xvf apache-tomcat-11.0.26.tar.gz                       (extract files)
+cd apache-tomcat-11.0.26/
+
+#how to start the tomcat Server
+ls -l bin/
+cd bin/
+./startup.sh
+
+#change port no Tomcat
+cd ..    -> cd conf/ -> vim server.xml   -> chnage in Connector port = 9090        ->cd ..  cd bin  ->./shutdown/
+(and also add inbound EC2)
+
+#give user access in tomcat
+cd .. -> ls --> cd webapps/  --> cd manager/ --> ls --> cd META-INF/ ==> vim context.xml(Valve allow="0.0.0.0/0, ::/0" />)
+
+#configuring the users in Tomcat
+cd .. ==> cd conf/ ==>vim tomcat-users.xml
+paste{     <role rolename="manager-gui" />
+           <user username="tomcat" password="tomcat" roles="manager-gui" />
+           <role rolename="admin-gui" />
+           <role rolename="manager-script" />
+           <user username="admin" password="admin" roles="manager-gui,admin-gui,manager-script" />
+
+}
+ ->cd ..  cd bin  ->./shutdown/ ==>./startup.sh
+
+acceess usernam & password admin
+
+==========================================================================
+step 1 adding the manger script role in tomcat -users.xml file
+
+jenkins ==> plugin ==> deploy to docker
+
+
+
+
+
+
