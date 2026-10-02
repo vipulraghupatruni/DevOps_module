@@ -57,6 +57,7 @@ step 1 adding the manger script role in tomcat -users.xml file
 
 jenkins ==> plugin ==> deploy to docker
 
+jenkins GUI- 
 
 
 
