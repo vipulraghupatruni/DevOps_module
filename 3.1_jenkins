@@ -1,0 +1,131 @@
+install jenkins
+======================
+
+dnf install java-21-amazon-corretto-headless maven -y                       (java/maven)
+
+
+# 1. Delete the broken file containing the HTML text
+sudo rm -f /etc/yum.repos.d/jenkins.repo
+
+# 2. Download the actual repository configuration file
+sudo wget -O /etc/yum.repos.d/jenkins.repo \
+  https://jenkins.io
+
+# 3. Import the official verification key
+sudo rpm --import https://jenkins.io
+
+sudo systemctl enable --now jenkins
+sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+
+*******************************************************************
+job 8- jenkins + maven + Github +tomcat Integration - 1
+automated way
+
+steps
+
+sudo wget https://dlcdn.apache.org/tomcat/tomcat-11/v11.0.26/bin/apache-tomcat-11.0.26.tar.gz
+tar -xvf apache-tomcat-11.0.26.tar.gz                       (extract files)
+cd apache-tomcat-11.0.26/
+
+#how to start the tomcat Server
+ls -l bin/
+cd bin/
+./startup.sh
+
+#change port no Tomcat
+cd ..    -> cd conf/ -> vim server.xml   -> chnage in Connector port = 9090        ->cd ..  cd bin  ->./shutdown/
+(and also add inbound EC2)
+
+#give user access in tomcat
+cd .. -> ls --> cd webapps/  --> cd manager/ --> ls --> cd META-INF/ ==> vim context.xml(Valve allow="0.0.0.0/0, ::/0" />)
+
+#configuring the users in Tomcat
+cd .. ==> cd conf/ ==>vim tomcat-users.xml
+paste{     <role rolename="manager-gui" />
+           <user username="tomcat" password="tomcat" roles="manager-gui" />
+           <role rolename="admin-gui" />
+           <role rolename="manager-script" />                                                 # Step 1: Adding the manager-script role in tomcat-users.xml file
+           <user username="admin" password="admin" roles="manager-gui,admin-gui,manager-script" />
+
+}
+ ->cd ..  cd bin  ->./shutdown/ ==>./startup.sh
+
+acceess usernam & password admin
+
+==========================================================================
+ adding the manger script role in tomcat -users.xml file
+freestyle project
+jenkins GUI-   jenkins ==> plugin ==> deploy to docker
+===========================================================================
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+pipeline project - netflix 
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+Install git on VM
+Install GIT in EC2 Instance where Jenkins is running
+sudo yum install git -y
+Jenkins Port No.: 8080
+Tomcat Port No.: 9090
+==========
+Part 4
+Inorder to do the automation, Jenkins is going to execute some script to deploy the war file into the Tomcat Webserver.
+
+Step 1: Adding the manager-script role in tomcat-users.xml file
+In order to do the automation, Tomcat user should have a "manager-script" permission. There should be one user in the Tomcat with the "manager-script" permission. Then with that user credentials we can automate the deployment process.
+Goto MobaXTerm and Connect to the Instance ----> ls -l ----> cd apache-tomcat-9.0.73 ----> ls -l ----> cd conf ----> ls -l ----> You can see tomcat-users.xml ----> vi tomcat-users.xml ----> Scroll down till you see... and type the below
+example=
+
+
+
+step 2: Installing "deploy to container" & "pipeline stageview" plugins in jenkin software
+Jenkins Dashboard ----> Manage Jenkins ----> Plugins ----> Available Plugins ----> In the search bar, type 'deploy to container' and check the same ----> Click on "Install without restart" ----> Click on "Go back to the top page."
+
+Step 3: Configure Maven in Jenkins
+Jenkins Dashboard ----> Manage Jenkins ----> System Configuration ----> Tools ----> Scroll down to Maven ----> Add maven ----> Name: maven3, latestVersion: 3.9.9 ----> Apply ----> Save
+
+jenkins tool
+1      create a new item netflix pipeline -- goto pipeline script & click pipelin syntax then select git paste git code -save apply then click on build now
+2      
+
+pipeline - stage 1 & stage 2
+-----------------------------
+pipeline {
+    agent any
+
+    tools {
+        maven 'maven3'
+    }
+
+    stages {
+        stage('clone the code') {
+            steps {
+                git 'https://github.com/vipulraghupatruni/Netflix-Pipeline-Project.git'
+            }
+        }
+
+        stage('Maven Build') {
+            steps {
+                script {
+                    def mavenHome = tool name: 'maven3', type: 'maven'
+                    def mavenCMD = "${mavenHome}/bin/mvn"
+                    // Run Maven build with parallel execution and skip tests if needed
+                    sh "${mavenCMD} clean package -T 1C -DskipTests"
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            echo 'cleaning up after build...'
+            cleanWs() // clean workspace after build
+        }
+    }
+}
+
+
+
+
+
+
+
+
