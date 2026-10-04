@@ -14,6 +14,9 @@ sudo wget -O /etc/yum.repos.d/jenkins.repo \
 # 3. Import the official verification key
 sudo rpm --import https://jenkins.io
 
+#after installations
+sudo dnf install jenkins -y
+
 sudo systemctl enable --now jenkins
 sudo cat /var/lib/jenkins/secrets/initialAdminPassword
 
