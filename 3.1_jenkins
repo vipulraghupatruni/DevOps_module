@@ -196,4 +196,239 @@ pipeline {
     }
 }
 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Jenkins + GitHub + Maven + Nexus + SonarQube + Tomcat + S3 -Pipeline Project
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+jenkins - CI & CD Process
+git & github - source code of the application
+maven - build the project (generating the war file)
+nexus - to store the artifacts (war/jar file)
+S3 - to store the artifacts in S3 bucket
+SonrQube - code quality analysis
+tomcat - deployment of applications
+
+Hotstar App
+---------------------------------
+jenkins setup - amazon linux linux 2, t2.micro
+ integrate with git & github
+ integrate with maven
+sonarqube setup -amazon linux linux 2, t2.medium
+tomcat setup -  amazon linux linux 2, t2.micro
+nexus setup -  ubuntu 24.04, t4.medium
+artifacts in s3 bucket (included)
+----------------------------------
+
+---------------------------------------          sonarqube setup- -------------------------------------------------
+cd /opt/
+wget https://binaries.sonarsource.com/?prefix=Distribution/sonarqube/sonarqube-25.12.0.117093.zip
+unzip sonarqube-25.12.0.117093.zip
+amazon-linux-extras install java-openjdk21 -y
+usedadd sonar
+chown sonar:sonar sonarqube-25.12.0.117093 -R
+chmod 777 sonarqube-25.12.0.117093 -R
+su - sonar
+
+or
+
+#!/bin/bash
+
+# 1. Install Java 21 and extraction tools
+# Note: For Amazon Linux 2023, 'amazon-linux-extras' is replaced by 'dnf'
+if command -v dnf &> /dev/null; then
+    sudo dnf install -y java-21-amazon-corretto wget unzip
+else
+    # Fallback for Amazon Linux 2 (if java 21 is available, otherwise uses 17)
+    sudo amazon-linux-extras install java-openjdk11 -y || sudo yum install -y java-17-amazon-corretto wget unzip
+fi
+
+# 2. Navigate to installation directory
+cd /opt/
+
+# 3. Download using the correct DIRECT link format
+sudo wget https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-25.12.0.117093.zip
+
+# 4. Extract package and clean up zip file
+sudo unzip sonarqube-25.12.0.117093.zip
+
+
+# 5. Create the dedicated service user safely
+if ! id "sonar" &>/dev/null; then
+    sudo useradd sonar
+fi
+
+
+# 6. Apply secure, proper ownership permissions
+sudo chown -R sonar:sonar /opt/sonarqube-25.12.0.117093
+sudo chmod -R 755 /opt/sonarqube-25.12.0.117093
+
+# 7. Switch to the sonar user environment
+echo "SonarQube setup complete. Switching environment to 'sonar' user..."
+sudo su - sonar
+
+# https://www.youtube.com/watch?v=gbnL66qt1zU
+# https://blog.devops.dev/how-to-install-sonarqube-on-linux-rhel-centos-57eb5893be
+
+-----------------------------------------------------nexus setup -------------------------------------------
+cd /opt
+sudo wget https://download.sonatype.com/nexus/3/nexus-3.96.4-01-linux-x86_64.tar.gz
+tar -xvf nexus-3.96
+sudo mv /opt/nexus-3.96/ nexus
+sudo adduser nexus ---->give password i.e nexus
+
+##to set no passwd for nexus user open the visudo file in ubuntu
+sudo visudo
+
+##add below line after "defaults"  use pty
+nexus ALL=(ALL) NOPASSWD: ALL
+save &exit (ctrl+x,press Y,enter)
+
+##give permission to nexus files and nexus directory to nexus user
+sudo chown -R nexus:nexus /opt/nexus
+sudo chown -R nexus:nexus /opt/sonatype-work
+
+##to run nexus as service at boot time, open/opt/nexus/bin/nexus.rc file, uncomment it and dd nexus user as shown below
+sudo nano /opt/nexus/bin/nexus.rc
+uncomment tje line which u see after opening the file 
+in the double quotes, keep "nexus" the finale line should be as shown below
+run_as_user="nexus"
+save & exit
+
+##to increase the nexus JVM heap size, u can  modify the size as shown  as below
+vi /opt/nexus/bin/nexus.vmoptions
+
+(use dd )remove first 15 lines i.e upto the space just before "#additional vm options needed for java21" remember dont delete "#additional vmoptions needed for java21" line
+paste the below content above "#additional vmoptions needed for java21+" line
+
+-Xms1024m
+-Xmx1024m
+-XX:MaxDirectMemorySize=1024m
+-XX:+UnlockDiagnosticVMOptions
+-XX:LogFile=./sonatype-work/nexus3/log/jvm.log
+-XX:-OmitStackTraceInFastThrow
+-Djava.net.preferIPv4Stack=true
+-Dkaraf.home=.
+-Dkaraf.base=.
+-Dkaraf.etc=etc/karaf
+-Djava.util.logging.config.file=etc/karaf/java.util.logging.properties
+-Dkaraf.data=./sonatype-work/nexus3
+-Dkaraf.log=./sonatype-work/nexus3/log
+-Djava.io.tmpdir=./sonatype-work/nexus3/tmp
+--add-reads=java.xml=java.logging
+--add-opens=java.base/java.security=ALL-UNNAMED
+--add-opens=java.base/java.net=ALL-UNNAMED
+--add-opens=java.base/java.lang=ALL-UNNAMED
+--add-opens=java.base/java.util=ALL-UNNAMED
+--add-opens=java.naming/javax.naming.spi=ALL-UNNAMED
+--add-opens=java.rmi/sun.rmi.transport.tcp=ALL-UNNAMED
+--add-exports=java.base/sun.net.www.protocol.http=ALL-UNNAMED
+--add-exports=java.base/sun.net.www.protocol.https=ALL-UNNAMED
+--add-exports=java.base/sun.net.www.protocol.jar=ALL-UNNAMED
+--add-exports=jdk.xml.dom/org.w3c.dom.html=ALL-UNNAMED
+--add-exports=jdk.naming.rmi/com.sun.jndi.url.rmi=ALL-UNNAMED
+--add-exports=java.security.sasl/com.sun.security.sasl=ALL-UNNAMED
+--add-exports=java.base/sun.security.x509=ALL-UNNAMED
+--add-exports=java.base/sun.security.rsa=ALL-UNNAMED
+--add-exports=java.base/sun.security.pkcs=ALL-UNNAMED
+
+
+Save and exit
+
+##To run nexus as service using Systemd
+sudo vi /etc/systemd/system/nexus.service ----> Paste the below content ---->
+
+[Unit]
+Description=nexus service
+After=network.target
+
+[Service]
+Type=forking
+LimitNOFILE=65536
+ExecStart=/opt/nexus/bin/nexus start
+ExecStop=/opt/nexus/bin/nexus stop
+User=nexus
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target
+
+Save and exit
+
+To start the nexus Service
+sudo systemctl daemon-reload
+sudo systemctl start nexus
+sudo systemctl status nexus
+
+
+########Open port no 8081 and access nexus
+ cat /opt/nexus/sonatype-work/nexus3/admin.password
+
+After installing setup
+================================================
+
+Step 6:
+----------
+6.1. Install below plugins in Jenkins
+Pipeline stageview, Deploy to container, S3 publisher, nexus artifact uploader, SonarQube Scanner, Sonar Quality Gate, Maven Integration
+
+'Check' Restart Jenkins after the above plugins got installed
+
+6.2. Setup Tomcat Creds in Jenkins
+Jenkins ----> Manage Jenkins ----> Security ----> Credentials ----> Click on 'global' ----> Add credentials ----> Kind: Username with Password, Scope: Global, username: tomcat, Password: kastro, ID: tomcat-creds, Description: tomcat-creds ----> Create
+
+6.3. Create pipeline job
+Repo URL: (HOTSTAR App)
+
+For the stage 'Deploy to Tomcat' generate the pipeline syntax;
+Open Pipeline Syntax in new tab ----> Sample step: deploy: Deploy war/ear to a container, WAR/EAR Files: **/*.war, Context Path: hotstarapp, Add container: Select 'Tomcat 9.x Remote', Credentials: Select the tomcat creds from dropdown, Tomcat URL: Paste upto 8080/ ----> Generate pipeline script ----> Copy and paste in 'Deploy to Tomcat' stage
+
+Paste the below script;
+Paste the below script;
+pipeline {
+    agent any
+    stages {
+        stage('Git Checkout') {
+            steps {
+                git '<Repo URL>'
+            }
+        }
+        stage('Compile') {
+            steps {
+                sh 'mvn compile'
+            }
+        }
+        stage('Test') {
+        steps {
+            sh 'mvn test'
+        }
+    }
+    stage('Arifacts') {
+        steps {
+            sh 'mvn clean package'
+        }
+    }
+    stage('Deploy to Tomcat') {
+        steps {
+            <Paste The Script>
+        }
+    }
+}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
