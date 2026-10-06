@@ -14,5 +14,7 @@ Jenkins
 
 5 Real time projects
 2 projects - Assignment
+1. Netflix
+2. Hotstar
 
 Interview Questions
