@@ -20,6 +20,8 @@ sudo dnf install jenkins -y
 sudo systemctl enable --now jenkins
 sudo cat /var/lib/jenkins/secrets/initialAdminPassword
 
+sudo netstat -tuln | grep <your-port-number>                             -file lang tell java/python/html
+
 *******************************************************************
 job 8- jenkins + maven + Github +tomcat Integration - 1
 automated way
@@ -197,7 +199,7 @@ pipeline {
 }
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-Jenkins + GitHub + Maven + Nexus + SonarQube + Tomcat + S3 -Pipeline Project
+Jenkins(8080) + GitHub + Maven + Nexus(8081) + SonarQube(9000) + Tomcat(9090) + S3 -Pipeline Project
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 jenkins - CI & CD Process
 git & github - source code of the application
@@ -267,6 +269,28 @@ sudo su - sonar
 
 # https://www.youtube.com/watch?v=gbnL66qt1zU
 # https://blog.devops.dev/how-to-install-sonarqube-on-linux-rhel-centos-57eb5893be
+
+sh sonar.sh
+sh /opt/sonarqube/bin/linux-x86-64/sonar.sh start
+useradd sonar
+passwd sonar
+
+visudo 
+inside editor ## Allows people in group wheel to run all commands
+      %wheel  ALL=(ALL)       ALL
+      sonar  ALL=(ALL)       ALL
+## Same thing without a password
+# %wheel        ALL=(ALL)       NOPASSWD: ALL
+sonar           ALL=(ALL)       NOPASSWD: ALL
+
+chown sonar:sonar sonarqube -R
+sudo su - sonar
+id
+cd sonarqube
+cd bin/linux-x86-64/sonar.sh start
+sh sonar.sh status
+netstat -tulpn|grep 9000
+
 
 -----------------------------------------------------nexus setup -------------------------------------------
 cd /opt
@@ -414,15 +438,23 @@ pipeline {
 }
 }
 
+----------------------------------------------------------------------------------------------
+access the  app in tomcat browser u will see hotstar app
+in jenkins server
+cd /var/lib/jenkins/workspace/
+ex hotstar app exists cd hotstar-app -->ls -l -->cd target --> app.war file keep into nexus_repository
+
+lets push the artifacts to S3 bucket
+
+go to aws --- use IAM service ---> IAM users -->namejenkin user/&0zfJ0m} -->aws cli
+after creating jenkin user 5 options will be there select security credentials
+Access key & secret Access key configure in jenkins
 
 
+jenkins ---> manage jenkins -->system_config(system) --->Amazon S3 files ---> add access & secret credentials --> save
 
-
-
-
-
-
-
+artifacts to s3 buckets generate the jenkin pipline script
+open hotstar job created --> open pipeline (generate script to push artifacts to nexus)--> sample 
 
 
 
