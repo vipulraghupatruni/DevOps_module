@@ -21,3 +21,39 @@ Tomcat (netflix/ hotstar)  ---> Docker container
 Docker images can be stored in 1) Dockerhub (public repo)  2) ECR (private)
 ECS Cluster
 ** ECR-ECS ** gitrepo project
+
+# ECR-ECS 
+-------------------------------------------------------
+** CI CD AWS DevOps Project with GitHub  **
+-------------------------------------------------------
+1.launch Amazon Linux 2 instance, t2.micro
+2.connect to the VM
+     -sudo su
+     -yum install docker -y
+     -systemctl start docker
+     -systemctl status docker
+     -docker images
+     -docker ps -a
+3.we need to clone the project from GitHub
+   yum install git -y
+   git clone https://github.com/vipulraghupatruni/ECR-ECS.git
+   cd ecs-ecr/  -> ls
+   check the contents of dockerfile
+4.build the image
+   docker build -t website:latest .
+   docker images                                                # delete docker rmi image_id(b9014)
+   docker run -itd -p 80:80 website                   (run container)
+   access the app using port 80
+   docker ps                      (check container exist)               # 1. Stop the running hotstar container  // docker stop id        # 2. Remove the hotstar container  // docker rm id
+
+5 aws ECR --> give name --> create  --> mame:website, image tag mutability:mutable ,encryption:AEs-256 --->create. u can see the ECR repo now -->  view push images.
+now i want to push the images which is in the instance to ECR but VM doesnt have the permission to push image to ECR need to create IAM
+
+5.2 AWS--->create IAM --> create role -->trusted entity type:AWS service,use case:EC2 --> next -->attach below policy:amazonEC2containerregistryFullAccess  --> next -->role name:ECR-Role --->create role
+
+5.3 attach the above role to VM
+
+5.4 lets push the image to ECR -->goto ECR --> check ECR created --> click view push cmd --> cpy 1st cmd i.e retrieve an auth token &authenticate your docker client to your registry --> goto mobo & execte cmd login succed
+
+
+
