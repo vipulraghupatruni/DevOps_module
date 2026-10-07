@@ -1,0 +1,22 @@
+--------------------------------------------------
+  Module:Devops on AWS
+--------------------------------------------------
+Git & GitHub -----> store the code  <------- code commit
+Maven        -----> build the project  <------- code build
+Jenkins      -----> CI & CD  <------- code pipeline
+Terraform    -----> Automation of resource creation     <------------- cloud formation
+       -tf file ---> info related to the resource creation
+        templates ---> Info related to the resource creation
+
+AWS Code Commit, AWS Code Build, AWS Code Pipeline, AWS Code Formation ---> Code Suite Service
+these services are specifically meant for AWS Cloud ONLY
+
+ECR    -Elastic Container Registry
+ECS    -Elastic Container Service
+
+Docker ---->Dockerfile (Docker commands/instructions) ----> Docker Images (Info related to the application deployment) ----> Docker Containers (Host our applications)
+
+Tomcat (netflix/ hotstar)  ---> Docker container
+
+Docker images can be stored in 1) Dockerhub (public repo)  2) ECR (private)
+ECS Cluster
