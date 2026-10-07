@@ -20,3 +20,4 @@ Tomcat (netflix/ hotstar)  ---> Docker container
 
 Docker images can be stored in 1) Dockerhub (public repo)  2) ECR (private)
 ECS Cluster
+** ECR-ECS ** gitrepo project
