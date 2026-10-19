@@ -1,0 +1,52 @@
+====================
+Docker
+====================
+Its a containerzation tool - its a pack of app into container
+Docker is a software platform that lets you pack a software application and everything it needs to run into a single, standardized package called a container.
+
+
+
+========================================================================================
+                                   DOCKER ARCHITECTURE
+========================================================================================
+
+  [ CLIENT ] ("you")                                    [ DOCKER HOST ]                                 [ REGISTRY ]
+ +------------------+                                +-------------------+                          +-------------------+
+
+ |                  |            |                                                      |           |  Images           |
+ |  docker run      |───────────>|   +-----------+                                      |           |   ┌───────────┐   |
+ |                  |            |   |           |──>  (Images)    (Containers)         |           |   │ NGINX     │   |
+ |                  |            |   |           |    +---------+    ┌─────┐            |           |   │ Ubuntu    │   |
+ |  docker build    |···········>|   |  Docker   |    | Python  |    │ █ █ │            |           |   │ PostgreSql│   |
+ |                  |            |   |  daemon   |    | Redis   |    └─────┘            |           |   │ ...       │   |
+ |                  |            |   |           |    | ....    |  <--------------------|-----------|---└───────────┘   |
+ |  docker pull     | - - - - - >|   |           | -  +---------+                       | -------   | ->│           │   |
+ |                  |            |   +-----------+                                      |           |   +-----------+   |
+ +------------------+            |                                                      |           |  Extensions       |
+                                 |                                                      |           |   [  ][  ][  ]    |
+                                 |                                                      |           |  Plugins          |
+                                 |                                                      |           |   [  ][  ][  ]    |
+                                 |                                                      |           +-------------------+
+                                 +------------------------------------------------------+
+
+========================================================================================
+                               COMMAND FLOW EXPLANATIONS
+========================================================================================
+
+1. docker run (Solid Line ──>)
+   Client  --> Sends execution command to Docker daemon.
+   Daemon  --> Checks local Images cache.
+   Host    --> Spins up and runs live, isolated Containers.
+
+2. docker build (Dotted Line ···>)
+   Client  --> Sends your local "recipe" (Dockerfile) to the Docker daemon.
+   Daemon  --> Bakes the recipe and stores a brand new blueprint in local Images.
+
+3. docker pull (Dashed Line - - >)
+   Client  --> Requests a specific pre-made image from the daemon.
+   Daemon  --> Reaches out to the online Registry (Docker Hub) to download it.
+   Host    --> Saves the downloaded file into local Images for later use.
+
+docker daemon - manages all the components of docker in container & images
+image - read only templates from which containers are created. a continer always created from image
+
