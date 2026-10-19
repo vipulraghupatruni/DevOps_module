@@ -1,5 +1,5 @@
 ====================
-Docker
+      Docker
 ====================
 Its a containerzation tool - its a pack of app into container
 Docker is a software platform that lets you pack a software application and everything it needs to run into a single, standardized package called a container.
@@ -52,15 +52,15 @@ image - read only templates from which containers are created. a continer always
 
 =============================================================
 
-1.create a EC2 instance
+###1.create a EC2 instance
  sudo su
 apt update
 apt install docker.io -y
 
-2. how to set local registry
+###2. how to set local registry
 docker images             -> cmd which shows images in local registry
 
-3.to create a deamon
+###3.to create a deamon
 docker run -it --name c01 ubuntu /bin/bash
   |       
 docker --->to intract with docker deamon
@@ -78,8 +78,88 @@ ls
 To come out of container → Press ctrl p & ctrl q
 (Save the process)
 (quit the process)
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+###4.list all the container
+docker ps -a
+• Terminal output arrows:
+	• CONTAINER ID \(\rightarrow \) Container ID
+	• IMAGE \(\rightarrow \) Base Image
+	• COMMAND \(\rightarrow \) Bash Terminal
+	• CREATED \(\rightarrow \) The container was created 2 min ago
+	• NAMES \(\rightarrow \) container name (Two containers cannot have the same name)
+
+Container runtime
+	• Running \(\rightarrow \) utilize RAM, CPU & storage
+	• Stopped \(\rightarrow \) Release CPU & RAM but storage is there. All the saved which was saved will be there but unsaved files is removed.
+	• Paused \(\rightarrow \) Release the RAM
+
+###5. stop the container
+docker stop <container name> or <cont id>
+
+###6. start the container
+docker start <container name> or <cont id>
+
+###7. we want to enter inside a existing container :
+docker exec -t c01 /bin/bash
+
+exec --> execute the existing container
+
+###8. Remove a container :- note: u cannot remove a running container
+docker stop c01
+docker rm c01
+
+###9.Remove the Image from local registry
+docker rmi <image name>:<TAG version>
+docker rmi ubuntu:latest                      \ubuntu -base image
+
+note:if a image associated with any container you cannot directly delete the image
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+mycon
+
+-----------------          |-------------------|
+| apache        |          |i want to create a |
+| file1 file2   | -------> |        replica of |
+|         file3 |          |         the cont1 |
+-----------------           -------------------
+
+ubuntu container --> create a Custom Image which is read only template of mycont
+from the custom image we can create as many container as we want
+
+docker commit <cont name><customImagename>
+
+### • First we are creating the container which we need to replicate :-
+docker run -it --name mycon ubuntu /bin/bash
+touch file1 file2 file3 file4
+apt update && apt install apache2 -y
+
+docker run -it --name <cont name mycon> <base imge ubuntu> 
+
+### * we need to create custom image of the container
+
+root@ip-172-31-83-208:/home/ubuntu# docker ps
+CONTAINER ID   IMAGE     COMMAND        CREATED          STATUS          PORTS     NAMES
+8438bc430409   ubuntu    "/bin/bash"    8 minutes ago    Up 8 minutes              mycon
+1b3a277ad33c   ubuntu    "/bin/bash"    28 minutes ago   Up 28 minutes             c01
+root@ip-172-31-83-208:/home/ubuntu#                                     docker commit mycon staragileimage
+sha256:33d96dea3cb22742ab21f0d9abccb78374e5a2175076a53faaafdfbc262ddac3
 
 
+root@ip-172-31-83-208:/home/ubuntu# docker images
+REPOSITORY       TAG       IMAGE ID       CREATED         SIZE
+staragileimage   latest    33d96dea3cb2   3 minutes ago   240MB                      (pointing to staragileimage): Read only template of mycon
+ubuntu           latest    602eb6fb314b   6 days ago      78.1MB
+
+### Now we create a container with staragileimage as a Base Image •  (It would be a Replica of mycon)
+docker run -it --name replicacon1 staragileimage /bin/bash
+root@04da3012439f:/# ls
+bin dev file1 file3 home lib.usr-is-merged media opt root sbin sys usr
+boot etc file2 file4 lib lib64          mnt  proc run  srv  tmp var
+root@04da3012439f:/# which apache2
+/usr/sbin/apache2
+
+• Arrow pointing to file1 file2 file3 file4: Where Apache webserver is installed (Note: The arrow visually points toward the files and the which apache2 output line below it)
+• Arrow pointing to replicacon1: name of container
+• Arrow pointing to staragileimage: Base Image
 
 
 
