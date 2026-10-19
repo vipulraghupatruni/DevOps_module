@@ -72,6 +72,7 @@ ubuntu ---> the base image from which container will be created
 
 first docker searched image locally ----> pulled the image from dockerhub ---> created container id
 drive.google.com/drive/folders/12vPOuDAYuqM9irD-DM3YZrfj3zfpFrF9
+https://drive.google.com/drive/folders/1Ye1l8pZhn2uyYSd7OKoOUjw3yLo8nmhi
 
 touch file1
 ls
