@@ -14,7 +14,7 @@ Docker is a software platform that lets you pack a software application and ever
  +------------------+                                +-------------------+                          +-------------------+
 
  |                  |            |                                                      |           |  Images           |
- |  docker run      |───────────>|   +-----------+                                      |           |   ┌───────────┐   |
+ |  docker run      |───────────>|   +-----------+      (local registry)                |           |   ┌───────────┐   |
  |                  |            |   |           |──>  (Images)    (Containers)         |           |   │ NGINX     │   |
  |                  |            |   |           |    +---------+    ┌─────┐            |           |   │ Ubuntu    │   |
  |  docker build    |···········>|   |  Docker   |    | Python  |    │ █ █ │            |           |   │ PostgreSql│   |
@@ -49,4 +49,42 @@ Docker is a software platform that lets you pack a software application and ever
 
 docker daemon - manages all the components of docker in container & images
 image - read only templates from which containers are created. a continer always created from image
+
+=============================================================
+
+1.create a EC2 instance
+ sudo su
+apt update
+apt install docker.io -y
+
+2. how to set local registry
+docker images             -> cmd which shows images in local registry
+
+3.to create a deamon
+docker run -it --name c01 ubuntu /bin/bash
+  |       
+docker --->to intract with docker deamon
+run --> to create
+ ↪ it (interactive terminal- u'll enter inside container after it create) / dt-detached terminal(- u'll not enter inside container automatcally after it create)       
+name ---> the name of cont is c01 u can have any name
+ubuntu ---> the base image from which container will be created
+/bin/bash ---> bash terminal by which u interact with container
+
+first docker searched image locally ----> pulled the image from dockerhub ---> created container id
+drive.google.com/drive/folders/12vPOuDAYuqM9irD-DM3YZrfj3zfpFrF9
+
+touch file1
+ls
+To come out of container → Press ctrl p & ctrl q
+(Save the process)
+(quit the process)
+
+
+
+
+
+
+
+
+
 
