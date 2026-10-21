@@ -18,3 +18,23 @@ baseimage jenkins/jenkins
 docker run -dt-p 2026:8080 --name jenkinscon jenkins/jenkins
 docker exec -it jenkinscon /bin/bash
 cat /var/jenkins...............Password
+
+
+-----------------------------------------------------------------------
+Dockerfile: text file which consist of set of instructions required to create a custom image.
+instructions:
+FROM : ur dockerfile always atrts with FROM . it consist of the base image of the container.
+  eg - FROM ubuntu | FROM jenkins
+
+RUN : we can install any packages & s/w inside container.
+   eg - RUN apt update | Run apt install apache -y | Run touch file | RUN rm /var/www/html/index.html
+
+COPY : if u want to copy some file from the machine to the container when it is created
+   eg - COPY vip.txt /tmp/
+            { vip.txt = source location | tmp = destination inside )
+
+EXPOSE : here u can define on which port the app is running , it helps the devops to do port mapping (-p)
+   eg - EXPOSE 8080 
+
+CMD : whatever will be written after CMD will be executed a container runtime, lets suppose u want to start some package when container is running
+   eg - CMD apachectl -d FORGROUND
