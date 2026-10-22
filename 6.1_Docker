@@ -38,3 +38,24 @@ EXPOSE : here u can define on which port the app is running , it helps the devop
 
 CMD : whatever will be written after CMD will be executed a container runtime, lets suppose u want to start some package when container is running
    eg - CMD apachectl -d FORGROUND
+
+
+==================================
+         Docker Compose
+==================================
+
+Docker compose is a tool which is used for defining and running multicontainer docker application. It uses yaml
+file(docker-compose.yml) to configure ur application's services etc
+
+command 
+
+1. docker-compose up  --> starts all the services defined
+2. docker-compose down --> stops and removes the containers
+3. docker-compose build --> executes the docker compose yml file
+4. docker-compose ps --> list all the running
+
+sudo apt install docker-compose
+docker-compose build
+docker images
+docker-compose up -d
+
