@@ -4,6 +4,9 @@
 
 it's a continer mgmt tool developed by google
 exyension of docker can manage containers it can handle scaling
+or 
+k8s is an open-source container mgmt tool which automates container deployment,container (de)scaling & container load balancing
+ benefit: works brilliantly with all cloud vendors :public,hybrid & on-premises
 
 containers are good
 both linux & docker container isolates the app from the host
