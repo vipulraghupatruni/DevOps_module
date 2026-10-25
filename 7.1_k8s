@@ -1,0 +1,18 @@
+==============
+     k8s
+==============
+
+it's a continer mgmt tool developed by google
+exyension of docker can manage containers it can handle scaling
+
+containers are good
+both linux & docker container isolates the app from the host
+but not easily manageable
+
+faster,reliable,effecient,light-weight,scalable 
+
+problems with scaling up containers
+1 containers could not communvicate with each other
+2. cnt had to be deployed & managed carefully
+3. Autoscaling was not possible
+4.Distributing traffic was still challenging
