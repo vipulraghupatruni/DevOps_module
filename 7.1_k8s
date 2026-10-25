@@ -19,3 +19,26 @@ problems with scaling up containers
 2. cnt had to be deployed & managed carefully
 3. Autoscaling was not possible
 4.Distributing traffic was still challenging
+
+in k8s we create a pod & inside the pod the container is present
+pod is a wrapper around the container
+we can have multiple container in pod but its preffered to have one container
+
+ ------------------------k8s controller----------------------------------------
+
+1 kubectl we need to create a pod with ubuntu
+2.scheduler decide in which node the pod will be created
+3.kubelet interact with API server
+kubelet will take to docker and create pod with container 
+4.kubelet sends the metadata of the pod & machine to API server
+-CPU utilization -RAM -Pod -pod utilization
+5.all the metadata of the cluster &pod is saved in etcd 
+
+kubectl                         ceo 
+pod                          employee
+API Server                   senior manager
+kubelet                       TL
+node 1/cont                   emp office 1
+etcd                         Accountant
+scheduler                    HR
+controller manager           client
